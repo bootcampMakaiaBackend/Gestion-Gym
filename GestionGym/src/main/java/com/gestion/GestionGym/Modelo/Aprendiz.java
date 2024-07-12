@@ -1,6 +1,5 @@
 package com.gestion.GestionGym.Modelo;
 
-
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -9,22 +8,22 @@ import java.util.List;
 @Entity
 @Table(name = "aprendriz")
 public class Aprendiz {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "aprendiz_id")
     private Long id;
-    
+
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 
-    @Column(name = "correo_electreonico")
+    @Column(name = "correo_electronico")
     private String correoElectronico;
 
     @Column(name = "contraseña")
-    private String contraseña;
+    private String contrasenia;
 
-    @Column(name = "fecha_macimiento")
+    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
     @Column(name = "genero")
@@ -35,7 +34,7 @@ public class Aprendiz {
 
     @Column(name = "nivel_condicion")
     private String nivelCondicion;
-    
+
     @ManyToOne
     @JoinColumn(name = "entrenador_id")
     private Entrenador entrenador;
@@ -46,25 +45,33 @@ public class Aprendiz {
     public Aprendiz() {
     }
 
-    public Aprendiz(List<ActividadEntrenamiento> actividadEntrenamientos, String contraseña, String correoElectronico, Entrenador entrenador, LocalDate fechaNacimiento, String genero, Long id, String nivelCondicion, String nombreCompleto, String objetivo) {
-        this.actividadEntrenamientos = actividadEntrenamientos;
-        this.contraseña = contraseña;
+    public Aprendiz(Long id, String nombreCompleto, String correoElectronico, String contrasenia, LocalDate fechaNacimiento, String genero, String objetivo, String nivelCondicion, Entrenador entrenador, List<ActividadEntrenamiento> actividadEntrenamientos) {
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
         this.correoElectronico = correoElectronico;
-        this.entrenador = entrenador;
+        this.contrasenia = contrasenia;
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
-        this.id = id;
-        this.nivelCondicion = nivelCondicion;
-        this.nombreCompleto = nombreCompleto;
         this.objetivo = objetivo;
+        this.nivelCondicion = nivelCondicion;
+        this.entrenador = entrenador;
+        this.actividadEntrenamientos = actividadEntrenamientos;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public Long getId() {
+        return id;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getCorreoElectronico() {
@@ -75,12 +82,12 @@ public class Aprendiz {
         this.correoElectronico = correoElectronico;
     }
 
-    public Entrenador getEntrenador() {
-        return entrenador;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setEntrenador(Entrenador entrenador) {
-        this.entrenador = entrenador;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public LocalDate getFechaNacimiento() {
@@ -99,12 +106,12 @@ public class Aprendiz {
         this.genero = genero;
     }
 
-    public Long getId() {
-        return id;
+    public String getObjetivo() {
+        return objetivo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
     }
 
     public String getNivelCondicion() {
@@ -115,20 +122,12 @@ public class Aprendiz {
         this.nivelCondicion = nivelCondicion;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public Entrenador getEntrenador() {
+        return entrenador;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public String getObjetivo() {
-        return objetivo;
-    }
-
-    public void setObjetivo(String objetivo) {
-        this.objetivo = objetivo;
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
     }
 
     public List<ActividadEntrenamiento> getActividadEntrenamientos() {

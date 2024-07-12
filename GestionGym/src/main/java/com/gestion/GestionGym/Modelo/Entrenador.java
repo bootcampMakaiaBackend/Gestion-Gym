@@ -17,16 +17,16 @@ public class Entrenador {
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 
-    @Column(name = "correo")
-    private String correo;
+    @Column(name = "correo_electronico")
+    private String correoElectronico;
 
     @Column(name = "contraseña")
-    private String contraseña;
+    private String contrasenia;
 
     @Column(name = "especialidad")
     private String especialidad;
 
-    @Column(name = "esperiencia")
+    @Column(name = "experiencia")
     private String experiencia;
 
     @Column(name = "certificaciones")
@@ -41,48 +41,48 @@ public class Entrenador {
     public Entrenador() {
     }
 
-    public Entrenador(List<ActividadEntrenamiento> actividadEntrenamientos, List<Aprendiz> aprendices, Set<String> certificaciones, String contraseña, String correo, String especialidad, String experiencia, Long id, String nombreCompleto) {
-        this.actividadEntrenamientos = actividadEntrenamientos;
-        this.aprendices = aprendices;
-        this.certificaciones = certificaciones;
-        this.contraseña = contraseña;
-        this.correo = correo;
+    public Entrenador(Long id, String nombreCompleto, String correoElectronico, String contrasenia, String especialidad, String experiencia, Set<String> certificaciones, List<Aprendiz> aprendices, List<ActividadEntrenamiento> actividadEntrenamientos) {
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+        this.correoElectronico = correoElectronico;
+        this.contrasenia = contrasenia;
         this.especialidad = especialidad;
         this.experiencia = experiencia;
+        this.certificaciones = certificaciones;
+        this.aprendices = aprendices;
+        this.actividadEntrenamientos = actividadEntrenamientos;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public List<Aprendiz> getAprendices() {
-        return aprendices;
+    public String getCorreoElectronico() {
+        return correoElectronico;
     }
 
-    public void setAprendices(List<Aprendiz> aprendices) {
-        this.aprendices = aprendices;
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
     }
 
-    public Set<String> getCertificaciones() {
-        return certificaciones;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setCertificaciones(Set<String> certificaciones) {
-        this.certificaciones = certificaciones;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public String getEspecialidad() {
@@ -101,20 +101,20 @@ public class Entrenador {
         this.experiencia = experiencia;
     }
 
-    public Long getId() {
-        return id;
+    public Set<String> getCertificaciones() {
+        return certificaciones;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCertificaciones(Set<String> certificaciones) {
+        this.certificaciones = certificaciones;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public List<Aprendiz> getAprendices() {
+        return aprendices;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setAprendices(List<Aprendiz> aprendices) {
+        this.aprendices = aprendices;
     }
 
     public List<ActividadEntrenamiento> getActividadEntrenamientos() {

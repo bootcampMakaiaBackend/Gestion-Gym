@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class ActividadEntrenamientoService {
 
-    private ActividadEntrenamientoRepositorio actividadEntrenamientoRepositorio;
+    private final ActividadEntrenamientoRepositorio actividadEntrenamientoRepositorio;
 
     @Autowired
     public ActividadEntrenamientoService(ActividadEntrenamientoRepositorio actividadEntrenamientoRepositorio) {

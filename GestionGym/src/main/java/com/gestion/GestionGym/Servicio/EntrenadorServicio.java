@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class EntrenadorServicio {
 
-    private EntrenadorRepositorio entrenadorRepositorio;
+    private final EntrenadorRepositorio entrenadorRepositorio;
 
     @Autowired
     public EntrenadorServicio(EntrenadorRepositorio entrenadorRepositorio) {
