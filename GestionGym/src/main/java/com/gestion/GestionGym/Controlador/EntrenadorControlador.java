@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("api/v1/entrenador")
 public class EntrenadorControlador {
 
-    private EntrenadorServicio entrenadorServicio;
+    private final EntrenadorServicio entrenadorServicio;
 
     @Autowired
     public EntrenadorControlador(EntrenadorServicio entrenadorServicio) {
@@ -20,19 +20,31 @@ public class EntrenadorControlador {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearEntrenador(@RequestBody Entrenador entrenador){
+    public ResponseEntity<String> crearEntrenador(@RequestBody Entrenador entrenador) {
         this.entrenadorServicio.crearEntrenador(entrenador);
-        return ResponseEntity.ok("Se creo el entrenador correctamente");
+        return ResponseEntity.ok("Se creó el entrenador correctamente");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> actualizarEntrenador(@PathVariable("id") Long id, @RequestBody Entrenador entrenador) {
+        this.entrenadorServicio.actualizarEntrenador(id, entrenador);
+        return ResponseEntity.ok("Se actualizó el entrenaodr correctamente");
     }
 
     @GetMapping
-    public List<Entrenador> obtenerEntrenadores(){
+    public List<Entrenador> obtenerEntrenadores() {
         return this.entrenadorServicio.obtenerEntrenadores();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Entrenador> obtenerEntrenadorPorId(@PathVariable("id") Long id) {
+        Entrenador entrenador = entrenadorServicio.obtenerEntrenadorPorId(id);
+        return ResponseEntity.ok(entrenador);
+    }
+
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarEntrenador(@PathVariable Long id){
+    public ResponseEntity<String> eliminarEntrenador(@PathVariable Long id) {
         this.entrenadorServicio.eliminarEntrenador(id);
-        return ResponseEntity.ok("Se elimino el entrenador correctamente");
+        return ResponseEntity.ok("Se eliminó el entrenador correctamente");
     }
 }

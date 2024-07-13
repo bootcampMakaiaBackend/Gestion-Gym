@@ -17,15 +17,35 @@ public class EntrenadorServicio {
         this.entrenadorRepositorio = entrenadorRepositorio;
     }
 
-    public void crearEntrenador(Entrenador entrenador){
+    public void crearEntrenador(Entrenador entrenador) {
         entrenadorRepositorio.save(entrenador);
     }
 
-    public List<Entrenador> obtenerEntrenadores(){
+    public void actualizarEntrenador(Long id, Entrenador entrenador) {
+        Entrenador entrenadorActualizar = entrenadorRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Entrenador no encontrado"));
+
+        entrenadorActualizar.setNombreCompleto(entrenador.getNombreCompleto());
+        entrenadorActualizar.setCorreoElectronico(entrenador.getCorreoElectronico());
+        entrenadorActualizar.setEspecialidad(entrenador.getEspecialidad());
+        entrenadorActualizar.setExperiencia(entrenador.getExperiencia());
+        entrenadorActualizar.setCertificaciones(entrenador.getCertificaciones());
+
+        entrenadorRepositorio.save(entrenadorActualizar);
+    }
+
+    public List<Entrenador> obtenerEntrenadores() {
         return entrenadorRepositorio.findAll();
     }
 
-    public void eliminarEntrenador(Long id){
-        entrenadorRepositorio.deleteById(id);
+    public Entrenador obtenerEntrenadorPorId(Long id) {
+        return entrenadorRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Entrenador con id " + id + " no encontrado"));
+    }
+
+    public void eliminarEntrenador(Long id) {
+        if (entrenadorRepositorio.existsById(id)) {
+            entrenadorRepositorio.deleteById(id);
+        } else {
+            throw new RuntimeException("Entrenador con id" + id + "no encontrado");
+        }
     }
 }

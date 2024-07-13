@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("api/v1/actividad_entrenamiento")
 public class ActividadEntrenamientoControlador {
 
-    private ActividadEntrenamientoService actividadEntrenamientoService;
+    private final ActividadEntrenamientoService actividadEntrenamientoService;
 
     @Autowired
     public ActividadEntrenamientoControlador(ActividadEntrenamientoService actividadEntrenamientoService) {
@@ -20,18 +20,23 @@ public class ActividadEntrenamientoControlador {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearActividad(@RequestBody ActividadEntrenamiento actividadEntrenamiento){
+    public ResponseEntity<String> crearActividad(@RequestBody ActividadEntrenamiento actividadEntrenamiento) {
         this.actividadEntrenamientoService.crearActividad(actividadEntrenamiento);
         return ResponseEntity.ok("Se creo la actividad correctamente");
     }
 
     @GetMapping
-    public List<ActividadEntrenamiento> obtenerActividades(){
-        return this.actividadEntrenamientoService.obtenerActividad();
+    public List<ActividadEntrenamiento> obtenerActividades() {
+        return this.actividadEntrenamientoService.obtenerActividades();
+    }
+
+    @GetMapping("/reporte/{aprendiz_id}/{mes}/{anio}")
+    public List<ActividadEntrenamiento> obtenerReporteMensual(@PathVariable("aprendiz_id") Long aprendiz_id, @PathVariable("mes") int mes, @PathVariable("anio") int anio) {
+        return actividadEntrenamientoService.obtenerReporteMensual(aprendiz_id, mes, anio);
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarActividad(@PathVariable Long id){
+    public ResponseEntity<String> eliminarActividad(@PathVariable Long id) {
         this.actividadEntrenamientoService.eliminarActividad(id);
         return ResponseEntity.ok("Se elimino la actividad correctamente");
     }

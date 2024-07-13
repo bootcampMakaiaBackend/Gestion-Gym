@@ -20,6 +20,12 @@ public class ActividadEntrenamiento {
     @Column(name = "duracion")
     private String duracion;
 
+    @Column(name = "mes")
+    private int mes;
+
+    @Column(name = "año")
+    private int anio;
+
     @ManyToOne
     @JoinColumn(name = "aprendiz_id")
     private Aprendiz aprendiz;
@@ -31,45 +37,15 @@ public class ActividadEntrenamiento {
     public ActividadEntrenamiento() {
     }
 
-    public ActividadEntrenamiento(Aprendiz aprendiz, String duracion, Entrenador entrenador, String fechaEntrenamiento, Long id, String tipoEntrenamiento) {
-        this.aprendiz = aprendiz;
-        this.duracion = duracion;
-        this.entrenador = entrenador;
-        this.fechaEntrenamiento = fechaEntrenamiento;
+    public ActividadEntrenamiento(Long id, int anio, int mes, String duracion, String fechaEntrenamiento, String tipoEntrenamiento, Entrenador entrenador, Aprendiz aprendiz) {
         this.id = id;
-        this.tipoEntrenamiento = tipoEntrenamiento;
-    }
-
-    public Aprendiz getAprendiz() {
-        return aprendiz;
-    }
-
-    public void setAprendiz(Aprendiz aprendiz) {
-        this.aprendiz = aprendiz;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
+        this.anio = anio;
+        this.mes = mes;
         this.duracion = duracion;
-    }
-
-    public Entrenador getEntrenador() {
-        return entrenador;
-    }
-
-    public void setEntrenador(Entrenador entrenador) {
-        this.entrenador = entrenador;
-    }
-
-    public String getFechaEntrenamiento() {
-        return fechaEntrenamiento;
-    }
-
-    public void setFechaEntrenamiento(String fechaEntrenamiento) {
         this.fechaEntrenamiento = fechaEntrenamiento;
+        this.tipoEntrenamiento = tipoEntrenamiento;
+        this.entrenador = entrenador;
+        this.aprendiz = aprendiz;
     }
 
     public Long getId() {
@@ -86,5 +62,53 @@ public class ActividadEntrenamiento {
 
     public void setTipoEntrenamiento(String tipoEntrenamiento) {
         this.tipoEntrenamiento = tipoEntrenamiento;
+    }
+
+    public String getFechaEntrenamiento() {
+        return fechaEntrenamiento;
+    }
+
+    public void setFechaEntrenamiento(String fechaEntrenamiento) {
+        this.fechaEntrenamiento = fechaEntrenamiento;
+    }
+
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public Aprendiz getAprendiz() {
+        return aprendiz;
+    }
+
+    public void setAprendiz(Aprendiz aprendiz) {
+        this.aprendiz = aprendiz;
+    }
+
+    public Entrenador getEntrenador() {
+        return entrenador;
+    }
+
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
     }
 }

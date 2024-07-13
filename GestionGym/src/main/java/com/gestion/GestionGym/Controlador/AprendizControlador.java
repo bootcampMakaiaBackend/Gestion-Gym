@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("api/v1/aprendiz")
 public class AprendizControlador {
 
-    private AprendizServicio aprendizServicio;
+    private final AprendizServicio aprendizServicio;
 
     @Autowired
     public AprendizControlador(AprendizServicio aprendizServicio) {
@@ -21,18 +21,30 @@ public class AprendizControlador {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz){
+    public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz) {
         this.aprendizServicio.crearAprendiz(aprendiz);
         return ResponseEntity.ok("Se creo el aprendiz correctamente");
     }
 
+    @PutMapping("/{id}/actualizar")
+    public ResponseEntity<String> actualizarAprendiz(@PathVariable Long id, @RequestBody Aprendiz aprendiz) {
+        aprendizServicio.actualizarAprendiz(id, aprendiz);
+        return ResponseEntity.ok("Se actualizó el aprendiz correctamente");
+    }
+
     @GetMapping
-    public List<Aprendiz> obtenerAprendices(){
+    public List<Aprendiz> obtenerAprendices() {
         return this.aprendizServicio.obtenerAprendices();
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarAprendiz(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Aprendiz> obtenerAprendizPorId(@PathVariable Long id) {
+        Aprendiz aprendiz = this.aprendizServicio.obtenerAprendizPorId(id);
+        return ResponseEntity.ok(aprendiz);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarAprendiz(@PathVariable Long id) {
         this.aprendizServicio.eliminarAprendiz(id);
         return ResponseEntity.ok("Se elimino el aprendiz correctamente");
     }

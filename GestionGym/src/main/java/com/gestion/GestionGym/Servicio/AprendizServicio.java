@@ -17,15 +17,23 @@ public class AprendizServicio {
         this.aprendizRepositorio = aprendizRepositorio;
     }
 
-    public void crearAprendiz(Aprendiz aprendiz){
+    public void crearAprendiz(Aprendiz aprendiz) {
         aprendizRepositorio.save(aprendiz);
     }
 
-    public List<Aprendiz> obtenerAprendices(){
+    public void actualizarAprendiz(Long id, Aprendiz aprendiz) {
+        Aprendiz aprendizActualizar = aprendizRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Aprendiz con id " + id + " no encontrado"));
+    }
+
+    public List<Aprendiz> obtenerAprendices() {
         return aprendizRepositorio.findAll();
     }
 
-    public void eliminarAprendiz(Long id){
+    public Aprendiz obtenerAprendizPorId(Long id) {
+        return aprendizRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Aprendiz con id " + id + " no encontrado"));
+    }
+
+    public void eliminarAprendiz(Long id) {
         aprendizRepositorio.deleteById(id);
     }
 

@@ -17,15 +17,21 @@ public class ActividadEntrenamientoService {
         this.actividadEntrenamientoRepositorio = actividadEntrenamientoRepositorio;
     }
 
-    public void crearActividad(ActividadEntrenamiento actividadEntrenamiento){
+    public void crearActividad(ActividadEntrenamiento actividadEntrenamiento) {
         actividadEntrenamientoRepositorio.save(actividadEntrenamiento);
     }
 
-    public List<ActividadEntrenamiento> obtenerActividad(){
+    public List<ActividadEntrenamiento> obtenerActividades() {
         return actividadEntrenamientoRepositorio.findAll();
     }
 
-    public void eliminarActividad(Long id){
+    //Obtener reportes mensual de un aprendiz
+    // TODO: este se debe comunicar con el segundo microservicio para obtener esta informacion.
+    public List<ActividadEntrenamiento> obtenerReporteMensual(Long aprendiz_id, int mes, int anio) {
+        return actividadEntrenamientoRepositorio.findByAprendizIdAndMesAndAnio(aprendiz_id, mes, anio);
+    }
+
+    public void eliminarActividad(Long id) {
         actividadEntrenamientoRepositorio.deleteById(id);
     }
 }
