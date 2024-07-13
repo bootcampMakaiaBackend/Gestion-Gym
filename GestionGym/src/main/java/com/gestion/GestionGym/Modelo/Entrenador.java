@@ -1,5 +1,6 @@
 package com.gestion.GestionGym.Modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -29,13 +30,17 @@ public class Entrenador {
     @Column(name = "experiencia")
     private String experiencia;
 
+    @ElementCollection
+    @CollectionTable(name = "entrenador_certificaciones", joinColumns = @JoinColumn(name = "entrenador_id"))
     @Column(name = "certificaciones")
     private Set<String> certificaciones;
 
     @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Aprendiz> aprendices;
 
     @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<ActividadEntrenamiento> actividadEntrenamientos;
 
     public Entrenador() {

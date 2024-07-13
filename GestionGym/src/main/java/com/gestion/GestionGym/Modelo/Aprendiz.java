@@ -1,12 +1,13 @@
 package com.gestion.GestionGym.Modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "aprendriz")
+@Table(name = "aprendiz")
 public class Aprendiz {
 
     @Id
@@ -24,7 +25,7 @@ public class Aprendiz {
     private String contrasenia;
 
     @Column(name = "fecha_nacimiento")
-    private LocalDate fechaNacimiento;
+    private LocalDate fechaNacimiento; // Formato YYYY-MM-DD
 
     @Column(name = "genero")
     private String genero;
@@ -37,9 +38,11 @@ public class Aprendiz {
 
     @ManyToOne
     @JoinColumn(name = "entrenador_id")
+    @JsonIgnore
     private Entrenador entrenador;
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<ActividadEntrenamiento> actividadEntrenamientos;
 
     public Aprendiz() {

@@ -1,6 +1,9 @@
 package com.gestion.GestionGym.Modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "actividad_entrenamiento")
@@ -15,45 +18,32 @@ public class ActividadEntrenamiento {
     private String tipoEntrenamiento;
 
     @Column(name = "fecha_entrenamiento")
-    private String fechaEntrenamiento;
+    private LocalDate fechaEntrenamiento;  // Formato yyyy-MM-dd
 
     @Column(name = "duracion")
     private String duracion;
 
-    @Column(name = "mes")
-    private int mes;
-
-    @Column(name = "año")
-    private int anio;
-
+    // TODO: Faltan los DTOs para filtrar informacion de los aprendices y entrenadores
     @ManyToOne
     @JoinColumn(name = "aprendiz_id")
+    @JsonIgnore
     private Aprendiz aprendiz;
 
     @ManyToOne
     @JoinColumn(name = "entrenador_id")
+    @JsonIgnore
     private Entrenador entrenador;
 
     public ActividadEntrenamiento() {
     }
 
-    public ActividadEntrenamiento(Long id, int anio, int mes, String duracion, String fechaEntrenamiento, String tipoEntrenamiento, Entrenador entrenador, Aprendiz aprendiz) {
+    public ActividadEntrenamiento(Long id, String tipoEntrenamiento, LocalDate fechaEntrenamiento, String duracion, Aprendiz aprendiz, Entrenador entrenador) {
         this.id = id;
-        this.anio = anio;
-        this.mes = mes;
-        this.duracion = duracion;
-        this.fechaEntrenamiento = fechaEntrenamiento;
         this.tipoEntrenamiento = tipoEntrenamiento;
-        this.entrenador = entrenador;
+        this.fechaEntrenamiento = fechaEntrenamiento;
+        this.duracion = duracion;
         this.aprendiz = aprendiz;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.entrenador = entrenador;
     }
 
     public String getTipoEntrenamiento() {
@@ -64,11 +54,19 @@ public class ActividadEntrenamiento {
         this.tipoEntrenamiento = tipoEntrenamiento;
     }
 
-    public String getFechaEntrenamiento() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getFechaEntrenamiento() {
         return fechaEntrenamiento;
     }
 
-    public void setFechaEntrenamiento(String fechaEntrenamiento) {
+    public void setFechaEntrenamiento(LocalDate fechaEntrenamiento) {
         this.fechaEntrenamiento = fechaEntrenamiento;
     }
 
@@ -78,22 +76,6 @@ public class ActividadEntrenamiento {
 
     public void setDuracion(String duracion) {
         this.duracion = duracion;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
     }
 
     public Aprendiz getAprendiz() {
