@@ -31,7 +31,7 @@ public class ActividadEntrenamientoControlador {
     }
 
     @GetMapping("/{aprendiz_id}/reporte/{mes}/{anio}")
-    public List<ActividadEntrenamiento> obtenerReporteMensual(@PathVariable("aprendiz_id") Long aprendiz_id, @PathVariable("mes") int mes, @PathVariable("anio") int anio) {
+    public String obtenerReporteMensual(@PathVariable("aprendiz_id") Long aprendiz_id, @PathVariable("mes") int mes, @PathVariable("anio") int anio) {
         return actividadEntrenamientoService.obtenerReporteMensual(aprendiz_id, mes, anio);
     }
 

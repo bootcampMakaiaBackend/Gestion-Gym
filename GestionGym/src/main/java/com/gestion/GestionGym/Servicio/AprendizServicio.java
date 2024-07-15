@@ -1,5 +1,6 @@
 package com.gestion.GestionGym.Servicio;
 
+import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Repositorio.AprendizRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class AprendizServicio {
     }
 
     public void actualizarAprendiz(Long id, Aprendiz aprendiz) {
-        Aprendiz aprendizActualizar = aprendizRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Aprendiz con id " + id + " no encontrado"));
+        Aprendiz aprendizActualizar = aprendizRepositorio.findById(id).orElseThrow(() -> new AprendizNoEncontradoExcepcion(id));
     }
 
     public List<Aprendiz> obtenerAprendices() {
