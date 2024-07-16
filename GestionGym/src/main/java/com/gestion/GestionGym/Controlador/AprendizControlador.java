@@ -2,6 +2,7 @@ package com.gestion.GestionGym.Controlador;
 
 import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
 import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
+import com.gestion.GestionGym.Excepciones.EntrenadorNoEncontradoExcepcion;
 import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Modelo.Entrenador;
@@ -25,11 +26,16 @@ public class AprendizControlador {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz, Long id) {
+    public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz) {
         try {
-            this.aprendizServicio.crearAprendiz(aprendiz, id);
-            return ResponseEntity.ok("Se creo el aprendiz correctamente");
-        }catch (AprendizExistenteExcepcion | InformacionIncompletaExcepcion e){
+            if (aprendiz.getEntrenador() == null || aprendiz.getEntrenador().getId() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del entrenador es requerido");
+            }
+
+            Long entrenadorId = aprendiz.getEntrenador().getId();
+            this.aprendizServicio.crearAprendiz(aprendiz, entrenadorId);
+            return ResponseEntity.ok("Se creó el aprendiz correctamente");
+        } catch (EntrenadorNoEncontradoExcepcion | AprendizExistenteExcepcion | InformacionIncompletaExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
@@ -39,7 +45,7 @@ public class AprendizControlador {
         try {
             aprendizServicio.actualizarAprendiz(id, aprendiz);
             return ResponseEntity.ok("Se actualizó el aprendiz correctamente");
-        }catch (AprendizNoEncontradoExcepcion e){
+        } catch (AprendizNoEncontradoExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

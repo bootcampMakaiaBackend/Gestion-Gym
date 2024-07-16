@@ -2,29 +2,40 @@ package com.gestion.GestionGym.Servicio;
 
 import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
 import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
+import com.gestion.GestionGym.Excepciones.EntrenadorNoEncontradoExcepcion;
 import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.Aprendiz;
+import com.gestion.GestionGym.Modelo.Entrenador;
 import com.gestion.GestionGym.Repositorio.AprendizRepositorio;
+import com.gestion.GestionGym.Repositorio.EntrenadorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AprendizServicio {
 
     private final AprendizRepositorio aprendizRepositorio;
+    private final EntrenadorRepositorio entrenadorRepositorio;
 
     @Autowired
-    public AprendizServicio(AprendizRepositorio aprendizRepositorio) {
+    public AprendizServicio(EntrenadorRepositorio entrenadorRepositorio, AprendizRepositorio aprendizRepositorio) {
+        this.entrenadorRepositorio = entrenadorRepositorio;
         this.aprendizRepositorio = aprendizRepositorio;
     }
 
-    public void crearAprendiz(Aprendiz aprendiz, Long id) {
-        if (aprendizRepositorio.existsById(id)){
-            throw new AprendizExistenteExcepcion(id);
+    public void crearAprendiz(Aprendiz aprendiz, Long entrenadorId) {
+        Optional<Entrenador> entrenador = entrenadorRepositorio.findById(entrenadorId);
+        if (entrenador.isEmpty()) {
+            throw new EntrenadorNoEncontradoExcepcion(entrenadorId);
         }
-        if((aprendiz.getNombreCompleto() == null) ||
+
+        if (aprendizRepositorio.existsByCorreoElectronico(aprendiz.getCorreoElectronico())) {
+            throw new AprendizExistenteExcepcion(aprendiz.getCorreoElectronico());
+        }
+        if ((aprendiz.getNombreCompleto() == null) ||
                 (aprendiz.getContrasenia() == null) ||
                 (aprendiz.getCorreoElectronico() == null) ||
                 (aprendiz.getFechaNacimiento() == null) ||
@@ -33,6 +44,8 @@ public class AprendizServicio {
                 (aprendiz.getNivelCondicion() == null)) {
             throw new InformacionIncompletaExcepcion();
         }
+
+        aprendiz.setEntrenador(entrenador.get());
         aprendizRepositorio.save(aprendiz);
     }
 

@@ -1,23 +1,29 @@
 package com.gestion.GestionGym.Modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class CategoriaEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categoria_entrenamiento_id")
     private Long id;
+
+    @Column(name = "nombre_categoria")
     private String nombre;
+
+    @OneToMany(mappedBy = "categoriaEntrenamiento", cascade = CascadeType.ALL)
+    private List<ActividadEntrenamiento> actividades;
 
     public CategoriaEntrenamiento() {
     }
 
-    public CategoriaEntrenamiento(Long id, String nombre) {
+    public CategoriaEntrenamiento(Long id, String nombre, List<ActividadEntrenamiento> actividades) {
         this.id = id;
         this.nombre = nombre;
+        this.actividades = actividades;
     }
 
     public Long getId() {
@@ -34,5 +40,13 @@ public class CategoriaEntrenamiento {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<ActividadEntrenamiento> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(List<ActividadEntrenamiento> actividades) {
+        this.actividades = actividades;
     }
 }

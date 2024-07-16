@@ -25,21 +25,22 @@ public class EntrenadorControlador {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearEntrenador(@RequestBody Entrenador entrenador, Long id) {
+    public ResponseEntity<String> crearEntrenador(@RequestBody Entrenador entrenador) {
         try {
-            this.entrenadorServicio.crearEntrenador(entrenador, id);
+            this.entrenadorServicio.crearEntrenador(entrenador);
             return ResponseEntity.ok("Se creó el entrenador correctamente");
-        }catch (EntrenadorExistenteExcepcion | InformacionIncompletaExcepcion e){
+        } catch (EntrenadorExistenteExcepcion | InformacionIncompletaExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<String> actualizarEntrenador(@PathVariable("id") Long id, @RequestBody Entrenador entrenador) {
         try {
             this.entrenadorServicio.actualizarEntrenador(id, entrenador);
             return ResponseEntity.ok("Se actualizó el entrenador correctamente");
-        }catch (EntrenadorNoEncontradoExcepcion e){
+        } catch (EntrenadorNoEncontradoExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
@@ -59,7 +60,7 @@ public class EntrenadorControlador {
         try {
             Entrenador entrenador = entrenadorServicio.obtenerEntrenadorPorId(id);
             return ResponseEntity.ok(entrenador);
-        }catch (EntrenadorNoEncontradoExcepcion e){
+        } catch (EntrenadorNoEncontradoExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -69,7 +70,7 @@ public class EntrenadorControlador {
         try {
             this.entrenadorServicio.eliminarEntrenador(id);
             return ResponseEntity.ok("Se eliminó el entrenador correctamente");
-        }catch (EntrenadorNoExistenteExcepcion e){
+        } catch (EntrenadorNoExistenteExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

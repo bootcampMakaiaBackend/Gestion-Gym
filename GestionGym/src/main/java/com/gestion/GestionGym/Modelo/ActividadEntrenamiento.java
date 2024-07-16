@@ -1,6 +1,5 @@
 package com.gestion.GestionGym.Modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -26,32 +25,27 @@ public class ActividadEntrenamiento {
     // TODO: Faltan los DTOs para filtrar informacion de los aprendices y entrenadores
     @ManyToOne
     @JoinColumn(name = "aprendiz_id")
-    @JsonIgnore
     private Aprendiz aprendiz;
 
     @ManyToOne
     @JoinColumn(name = "entrenador_id")
-    @JsonIgnore
     private Entrenador entrenador;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_entrenamiento_id")
+    private CategoriaEntrenamiento categoriaEntrenamiento;
 
     public ActividadEntrenamiento() {
     }
 
-    public ActividadEntrenamiento(Long id, String tipoEntrenamiento, LocalDate fechaEntrenamiento, String duracion, Aprendiz aprendiz, Entrenador entrenador) {
+    public ActividadEntrenamiento(Long id, String tipoEntrenamiento, String duracion, LocalDate fechaEntrenamiento, Aprendiz aprendiz, Entrenador entrenador, CategoriaEntrenamiento categoriaEntrenamiento) {
         this.id = id;
         this.tipoEntrenamiento = tipoEntrenamiento;
-        this.fechaEntrenamiento = fechaEntrenamiento;
         this.duracion = duracion;
+        this.fechaEntrenamiento = fechaEntrenamiento;
         this.aprendiz = aprendiz;
         this.entrenador = entrenador;
-    }
-
-    public String getTipoEntrenamiento() {
-        return tipoEntrenamiento;
-    }
-
-    public void setTipoEntrenamiento(String tipoEntrenamiento) {
-        this.tipoEntrenamiento = tipoEntrenamiento;
+        this.categoriaEntrenamiento = categoriaEntrenamiento;
     }
 
     public Long getId() {
@@ -60,6 +54,14 @@ public class ActividadEntrenamiento {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTipoEntrenamiento() {
+        return tipoEntrenamiento;
+    }
+
+    public void setTipoEntrenamiento(String tipoEntrenamiento) {
+        this.tipoEntrenamiento = tipoEntrenamiento;
     }
 
     public LocalDate getFechaEntrenamiento() {
@@ -92,5 +94,13 @@ public class ActividadEntrenamiento {
 
     public void setEntrenador(Entrenador entrenador) {
         this.entrenador = entrenador;
+    }
+
+    public CategoriaEntrenamiento getCategoriaEntrenamiento() {
+        return categoriaEntrenamiento;
+    }
+
+    public void setCategoriaEntrenamiento(CategoriaEntrenamiento categoriaEntrenamiento) {
+        this.categoriaEntrenamiento = categoriaEntrenamiento;
     }
 }

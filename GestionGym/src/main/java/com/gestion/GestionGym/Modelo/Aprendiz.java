@@ -38,7 +38,6 @@ public class Aprendiz {
 
     @ManyToOne
     @JoinColumn(name = "entrenador_id")
-    @JsonIgnore
     private Entrenador entrenador;
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL)
