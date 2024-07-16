@@ -1,6 +1,8 @@
 package com.gestion.GestionGym.Servicio;
 
+import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
 import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
+import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Repositorio.AprendizRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,19 @@ public class AprendizServicio {
         this.aprendizRepositorio = aprendizRepositorio;
     }
 
-    public void crearAprendiz(Aprendiz aprendiz) {
+    public void crearAprendiz(Aprendiz aprendiz, Long id) {
+        if (aprendizRepositorio.existsById(id)){
+            throw new AprendizExistenteExcepcion(id);
+        }
+        if((aprendiz.getNombreCompleto() == null) ||
+                (aprendiz.getContrasenia() == null) ||
+                (aprendiz.getCorreoElectronico() == null) ||
+                (aprendiz.getFechaNacimiento() == null) ||
+                (aprendiz.getGenero() == null) ||
+                (aprendiz.getObjetivo() == null) ||
+                (aprendiz.getNivelCondicion() == null)) {
+            throw new InformacionIncompletaExcepcion();
+        }
         aprendizRepositorio.save(aprendiz);
     }
 

@@ -32,10 +32,9 @@ public class EntrenadorControlador {
         }catch (EntrenadorExistenteExcepcion | InformacionIncompletaExcepcion e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<String> actualizarEntrenador(@PathVariable("id") Long id, @RequestBody Entrenador entrenador) {
         try {
             this.entrenadorServicio.actualizarEntrenador(id, entrenador);
