@@ -1,9 +1,12 @@
 package com.gestion.GestionGym.Controlador;
 
+import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
+import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Modelo.Entrenador;
 import com.gestion.GestionGym.Servicio.AprendizServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +24,13 @@ public class AprendizControlador {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz) {
-        this.aprendizServicio.crearAprendiz(aprendiz);
-        return ResponseEntity.ok("Se creo el aprendiz correctamente");
+    public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz, Long id) {
+        try {
+            this.aprendizServicio.crearAprendiz(aprendiz, id);
+            return ResponseEntity.ok("Se creo el aprendiz correctamente");
+        }catch (AprendizExistenteExcepcion | InformacionIncompletaExcepcion e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}/actualizar")
