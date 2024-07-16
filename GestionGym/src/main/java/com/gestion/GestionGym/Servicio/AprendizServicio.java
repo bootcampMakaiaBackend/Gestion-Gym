@@ -74,5 +74,4 @@ public class AprendizServicio {
     public void eliminarAprendiz(Long id) {
         aprendizRepositorio.deleteById(id);
     }
-
 }
