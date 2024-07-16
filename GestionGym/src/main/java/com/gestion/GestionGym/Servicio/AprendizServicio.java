@@ -38,6 +38,16 @@ public class AprendizServicio {
 
     public void actualizarAprendiz(Long id, Aprendiz aprendiz) {
         Aprendiz aprendizActualizar = aprendizRepositorio.findById(id).orElseThrow(() -> new AprendizNoEncontradoExcepcion(id));
+
+        aprendizActualizar.setNombreCompleto(aprendiz.getNombreCompleto());
+        aprendizActualizar.setCorreoElectronico(aprendiz.getCorreoElectronico());
+        aprendizActualizar.setContrasenia(aprendiz.getContrasenia());
+        aprendizActualizar.setGenero(aprendiz.getGenero());
+        aprendizActualizar.setObjetivo(aprendiz.getObjetivo());
+        aprendizActualizar.setNivelCondicion(aprendiz.getNivelCondicion());
+        aprendizActualizar.setEntrenador(aprendiz.getEntrenador());
+
+        aprendizRepositorio.save(aprendizActualizar);
     }
 
     public List<Aprendiz> obtenerAprendices() {

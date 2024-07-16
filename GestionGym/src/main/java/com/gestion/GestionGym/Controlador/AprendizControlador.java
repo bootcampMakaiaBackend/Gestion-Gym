@@ -1,6 +1,7 @@
 package com.gestion.GestionGym.Controlador;
 
 import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
+import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
 import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Modelo.Entrenador;
@@ -35,8 +36,12 @@ public class AprendizControlador {
 
     @PutMapping("/{id}/actualizar")
     public ResponseEntity<String> actualizarAprendiz(@PathVariable Long id, @RequestBody Aprendiz aprendiz) {
-        aprendizServicio.actualizarAprendiz(id, aprendiz);
-        return ResponseEntity.ok("Se actualizó el aprendiz correctamente");
+        try {
+            aprendizServicio.actualizarAprendiz(id, aprendiz);
+            return ResponseEntity.ok("Se actualizó el aprendiz correctamente");
+        }catch (AprendizNoEncontradoExcepcion e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping
