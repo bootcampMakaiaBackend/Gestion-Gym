@@ -62,7 +62,7 @@ public class ActividadEntrenamientoService {
             case 12:
                 return "Diciembre";
             default:
-                return "Mes desconocido";
+                return "Mes fuera de rango";
         }
     }
 
