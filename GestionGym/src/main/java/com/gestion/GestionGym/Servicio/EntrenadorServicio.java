@@ -21,16 +21,17 @@ public class EntrenadorServicio {
         this.entrenadorRepositorio = entrenadorRepositorio;
     }
 
-    public void crearEntrenador(Entrenador entrenador, Long id) {
-        if (entrenadorRepositorio.existsById(id)) {
-            throw new EntrenadorExistenteExcepcion(id);
+    public void crearEntrenador(Entrenador entrenador) {
+        if (entrenadorRepositorio.existsByCorreoElectronico(entrenador.getCorreoElectronico())) {
+            throw new EntrenadorExistenteExcepcion(entrenador.getCorreoElectronico());
         }
-        if ((entrenador.getCertificaciones() == null) ||
-                (entrenador.getEspecialidad() == null) ||
-                (entrenador.getExperiencia() == null) ||
-                (entrenador.getCorreoElectronico() == null) ||
-                (entrenador.getContrasenia() == null) ||
-                (entrenador.getNombreCompleto() == null)) {
+
+        if (entrenador.getCertificaciones() == null ||
+                entrenador.getEspecialidad() == null ||
+                entrenador.getExperiencia() == null ||
+                entrenador.getCorreoElectronico() == null ||
+                entrenador.getContrasenia() == null ||
+                entrenador.getNombreCompleto() == null) {
             throw new InformacionIncompletaExcepcion();
         }
         entrenadorRepositorio.save(entrenador);
@@ -49,7 +50,7 @@ public class EntrenadorServicio {
     }
 
     public List<Entrenador> obtenerEntrenadores() {
-        if (entrenadorRepositorio == null){
+        if (entrenadorRepositorio == null) {
             throw new EntrenadorNoExistenteExcepcion();
         }
         return entrenadorRepositorio.findAll();

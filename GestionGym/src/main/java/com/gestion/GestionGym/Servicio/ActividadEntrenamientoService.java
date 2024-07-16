@@ -1,5 +1,7 @@
 package com.gestion.GestionGym.Servicio;
 
+import com.gestion.GestionGym.Excepciones.ActividadExistenteExcepcion;
+import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.ActividadEntrenamiento;
 import com.gestion.GestionGym.Repositorio.ActividadEntrenamientoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,15 @@ public class ActividadEntrenamientoService {
     }
 
     public void crearActividad(ActividadEntrenamiento actividadEntrenamiento) {
+        if (actividadEntrenamientoRepositorio.existsByFechaEntrenamientoAndTipoEntrenamiento(actividadEntrenamiento.getFechaEntrenamiento(), actividadEntrenamiento.getTipoEntrenamiento())) {
+            throw new ActividadExistenteExcepcion(actividadEntrenamiento.getFechaEntrenamiento(), actividadEntrenamiento.getTipoEntrenamiento());
+        }
+
+        if (actividadEntrenamiento.getFechaEntrenamiento() == null ||
+                actividadEntrenamiento.getTipoEntrenamiento() == null ||
+                actividadEntrenamiento.getAprendiz() == null) {
+            throw new InformacionIncompletaExcepcion();
+        }
         actividadEntrenamientoRepositorio.save(actividadEntrenamiento);
     }
 
@@ -78,8 +89,8 @@ public class ActividadEntrenamientoService {
 
         actividadPorSemana.forEach((semana, actividadesDeLaSemana) -> {
             reporte.append(String.format("Semana %d:%n", semana));
-            actividadesDeLaSemana.forEach(a->{
-                reporte.append(String.format("- %s: %s, %s%n",a.getFechaEntrenamiento().getDayOfWeek().name(),
+            actividadesDeLaSemana.forEach(a -> {
+                reporte.append(String.format("- %s: %s, %s%n", a.getFechaEntrenamiento().getDayOfWeek().name(),
                         a.getFechaEntrenamiento(),
                         a.getTipoEntrenamiento()));
             });

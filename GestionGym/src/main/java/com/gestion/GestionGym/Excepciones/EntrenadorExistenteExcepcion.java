@@ -1,8 +1,7 @@
 package com.gestion.GestionGym.Excepciones;
 
-public class EntrenadorExistenteExcepcion extends RuntimeException{
-
-    public EntrenadorExistenteExcepcion(Long id) {
-        super("El entrenador con id " + id + " ya existe");
+public class EntrenadorExistenteExcepcion extends RuntimeException {
+    public EntrenadorExistenteExcepcion(String correoElectronico) {
+        super("El entrenador con el correo electrónico " + correoElectronico + " ya existe.");
     }
 }

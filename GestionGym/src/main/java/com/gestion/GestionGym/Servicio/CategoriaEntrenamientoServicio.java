@@ -1,7 +1,9 @@
 package com.gestion.GestionGym.Servicio;
 
 
+import com.gestion.GestionGym.Excepciones.CategoriaExistenteExcepcion;
 import com.gestion.GestionGym.Excepciones.CategoriaNoEncontradaExcepcion;
+import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.CategoriaEntrenamiento;
 import com.gestion.GestionGym.Repositorio.CategoriaEntrenamientoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +14,34 @@ import java.util.List;
 @Service
 public class CategoriaEntrenamientoServicio {
 
+    private final CategoriaEntrenamientoRepositorio categoriaEntrenamientoRepositorio;
+
     @Autowired
-    private CategoriaEntrenamientoRepositorio CategoriaEntrenamientoRepositorio;
-
-    public CategoriaEntrenamiento agregarCategoriaEntrenamiento(CategoriaEntrenamiento categoriaEntrenamiento) {
-        return CategoriaEntrenamientoRepositorio.save(categoriaEntrenamiento);
+    public CategoriaEntrenamientoServicio(CategoriaEntrenamientoRepositorio categoriaEntrenamientoRepositorio) {
+        this.categoriaEntrenamientoRepositorio = categoriaEntrenamientoRepositorio;
     }
 
-    public CategoriaEntrenamiento modificarCategoriaEntrenamiento(Long id, CategoriaEntrenamiento categoria) {
-        CategoriaEntrenamiento existente = CategoriaEntrenamientoRepositorio.findById(id).orElseThrow(() -> new CategoriaNoEncontradaExcepcion(id));
+    public void agregarCategoriaEntrenamiento(CategoriaEntrenamiento categoriaEntrenamiento) {
+        if (categoriaEntrenamientoRepositorio.existsByNombre(categoriaEntrenamiento.getNombre())) {
+            throw new CategoriaExistenteExcepcion(categoriaEntrenamiento.getNombre());
+        }
+        if (categoriaEntrenamiento.getNombre() == null) {
+            throw new InformacionIncompletaExcepcion();
+        }
+        categoriaEntrenamientoRepositorio.save(categoriaEntrenamiento);
+    }
+
+    public void modificarCategoriaEntrenamiento(Long id, CategoriaEntrenamiento categoria) {
+        CategoriaEntrenamiento existente = categoriaEntrenamientoRepositorio.findById(id).orElseThrow(() -> new CategoriaNoEncontradaExcepcion(id));
         existente.setNombre(categoria.getNombre());
-        return CategoriaEntrenamientoRepositorio.save(existente);
+        categoriaEntrenamientoRepositorio.save(existente);
     }
 
-    public CategoriaEntrenamiento obtenerCategoriaEntrenamiento(Long id) {
-        return CategoriaEntrenamientoRepositorio.findById(id).orElseThrow(() -> new CategoriaNoEncontradaExcepcion(id));
+    public CategoriaEntrenamiento obtenerCategoriaEntrenamientoPorId(Long id) {
+        return categoriaEntrenamientoRepositorio.findById(id).orElseThrow(() -> new CategoriaNoEncontradaExcepcion(id));
     }
 
-    public List<CategoriaEntrenamiento> obtenerTodasCategoriasEntrenamiento() {
-        return CategoriaEntrenamientoRepositorio.findAll();
+    public List<CategoriaEntrenamiento> obtenerCategoriasDeEntrenamientos() {
+        return categoriaEntrenamientoRepositorio.findAll();
     }
 }

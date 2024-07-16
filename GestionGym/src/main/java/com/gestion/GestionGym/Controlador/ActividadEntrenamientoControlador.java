@@ -1,8 +1,11 @@
 package com.gestion.GestionGym.Controlador;
 
+import com.gestion.GestionGym.Excepciones.ActividadExistenteExcepcion;
+import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.ActividadEntrenamiento;
 import com.gestion.GestionGym.Servicio.ActividadEntrenamientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +24,12 @@ public class ActividadEntrenamientoControlador {
 
     @PostMapping
     public ResponseEntity<String> crearActividad(@RequestBody ActividadEntrenamiento actividadEntrenamiento) {
-        this.actividadEntrenamientoService.crearActividad(actividadEntrenamiento);
-        return ResponseEntity.ok("Se creo la actividad correctamente");
+        try {
+            this.actividadEntrenamientoService.crearActividad(actividadEntrenamiento);
+            return ResponseEntity.ok("Se creo la actividad correctamente");
+        } catch (ActividadExistenteExcepcion | InformacionIncompletaExcepcion e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping
