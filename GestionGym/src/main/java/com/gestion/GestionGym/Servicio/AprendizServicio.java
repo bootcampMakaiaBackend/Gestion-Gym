@@ -1,9 +1,6 @@
 package com.gestion.GestionGym.Servicio;
 
-import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
-import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
-import com.gestion.GestionGym.Excepciones.EntrenadorNoEncontradoExcepcion;
-import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
+import com.gestion.GestionGym.Excepciones.*;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Modelo.Entrenador;
 import com.gestion.GestionGym.Repositorio.AprendizRepositorio;
@@ -64,14 +61,21 @@ public class AprendizServicio {
     }
 
     public List<Aprendiz> obtenerAprendices() {
+        if (aprendizRepositorio == null){
+            throw new AprendizNoExistenteExcepcion();
+        }
         return aprendizRepositorio.findAll();
     }
 
     public Aprendiz obtenerAprendizPorId(Long id) {
-        return aprendizRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Aprendiz con id " + id + " no encontrado"));
+        return aprendizRepositorio.findById(id).orElseThrow(() -> new AprendizNoEncontradoExcepcion(id));
     }
 
     public void eliminarAprendiz(Long id) {
-        aprendizRepositorio.deleteById(id);
+        if (aprendizRepositorio.existsById(id)){
+            aprendizRepositorio.deleteById(id);
+        }else {
+            throw new AprendizNoEncontradoExcepcion(id);
+        }
     }
 }

@@ -1,9 +1,6 @@
 package com.gestion.GestionGym.Controlador;
 
-import com.gestion.GestionGym.Excepciones.AprendizExistenteExcepcion;
-import com.gestion.GestionGym.Excepciones.AprendizNoEncontradoExcepcion;
-import com.gestion.GestionGym.Excepciones.EntrenadorNoEncontradoExcepcion;
-import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
+import com.gestion.GestionGym.Excepciones.*;
 import com.gestion.GestionGym.Modelo.Aprendiz;
 import com.gestion.GestionGym.Modelo.Entrenador;
 import com.gestion.GestionGym.Servicio.AprendizServicio;
@@ -51,19 +48,32 @@ public class AprendizControlador {
     }
 
     @GetMapping
-    public List<Aprendiz> obtenerAprendices() {
-        return this.aprendizServicio.obtenerAprendices();
+    public ResponseEntity<List<Aprendiz>> obtenerAprendices() {
+        try {
+            List<Aprendiz> aprendices = this.aprendizServicio.obtenerAprendices();
+            return ResponseEntity.ok(aprendices);
+        }catch (AprendizNoExistenteExcepcion e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Aprendiz> obtenerAprendizPorId(@PathVariable Long id) {
-        Aprendiz aprendiz = this.aprendizServicio.obtenerAprendizPorId(id);
-        return ResponseEntity.ok(aprendiz);
+        try {
+            Aprendiz aprendiz = this.aprendizServicio.obtenerAprendizPorId(id);
+            return ResponseEntity.ok(aprendiz);
+        }catch (AprendizNoEncontradoExcepcion e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarAprendiz(@PathVariable Long id) {
-        this.aprendizServicio.eliminarAprendiz(id);
-        return ResponseEntity.ok("Se elimino el aprendiz correctamente");
+        try {
+            this.aprendizServicio.eliminarAprendiz(id);
+            return ResponseEntity.ok("Se elimino el aprendiz correctamente");
+        }catch (AprendizNoExistenteExcepcion e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
