@@ -39,23 +39,18 @@ public class Entrenador {
     @JsonIgnore
     private List<Aprendiz> aprendices;
 
-    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<ActividadEntrenamiento> actividadEntrenamientos;
-
     public Entrenador() {
     }
 
-    public Entrenador(Long id, String nombreCompleto, String correoElectronico, String contrasenia, String especialidad, String experiencia, Set<String> certificaciones, List<Aprendiz> aprendices, List<ActividadEntrenamiento> actividadEntrenamientos) {
+    public Entrenador(Long id, String nombreCompleto, String contrasenia, String correoElectronico, String especialidad, String experiencia, Set<String> certificaciones, List<Aprendiz> aprendices) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
-        this.correoElectronico = correoElectronico;
         this.contrasenia = contrasenia;
+        this.correoElectronico = correoElectronico;
         this.especialidad = especialidad;
         this.experiencia = experiencia;
         this.certificaciones = certificaciones;
         this.aprendices = aprendices;
-        this.actividadEntrenamientos = actividadEntrenamientos;
     }
 
     public Long getId() {
@@ -120,13 +115,5 @@ public class Entrenador {
 
     public void setAprendices(List<Aprendiz> aprendices) {
         this.aprendices = aprendices;
-    }
-
-    public List<ActividadEntrenamiento> getActividadEntrenamientos() {
-        return actividadEntrenamientos;
-    }
-
-    public void setActividadEntrenamientos(List<ActividadEntrenamiento> actividadEntrenamientos) {
-        this.actividadEntrenamientos = actividadEntrenamientos;
     }
 }

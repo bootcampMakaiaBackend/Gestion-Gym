@@ -18,9 +18,9 @@ public class AprendizServicio {
     private final EntrenadorRepositorio entrenadorRepositorio;
 
     @Autowired
-    public AprendizServicio(EntrenadorRepositorio entrenadorRepositorio, AprendizRepositorio aprendizRepositorio) {
-        this.entrenadorRepositorio = entrenadorRepositorio;
+    public AprendizServicio(AprendizRepositorio aprendizRepositorio, EntrenadorRepositorio entrenadorRepositorio) {
         this.aprendizRepositorio = aprendizRepositorio;
+        this.entrenadorRepositorio = entrenadorRepositorio;
     }
 
     public void crearAprendiz(Aprendiz aprendiz, Long entrenadorId) {
@@ -37,7 +37,7 @@ public class AprendizServicio {
                 (aprendiz.getCorreoElectronico() == null) ||
                 (aprendiz.getFechaNacimiento() == null) ||
                 (aprendiz.getGenero() == null) ||
-                (aprendiz.getObjetivo() == null) ||
+                (aprendiz.getObjetivoEntrenamiento() == null) ||
                 (aprendiz.getNivelCondicion() == null)) {
             throw new InformacionIncompletaExcepcion();
         }
@@ -53,7 +53,7 @@ public class AprendizServicio {
         aprendizActualizar.setCorreoElectronico(aprendiz.getCorreoElectronico());
         aprendizActualizar.setContrasenia(aprendiz.getContrasenia());
         aprendizActualizar.setGenero(aprendiz.getGenero());
-        aprendizActualizar.setObjetivo(aprendiz.getObjetivo());
+        aprendizActualizar.setObjetivoEntrenamiento(aprendiz.getObjetivoEntrenamiento());
         aprendizActualizar.setNivelCondicion(aprendiz.getNivelCondicion());
         aprendizActualizar.setEntrenador(aprendiz.getEntrenador());
 
@@ -78,4 +78,5 @@ public class AprendizServicio {
             throw new AprendizNoEncontradoExcepcion(id);
         }
     }
+
 }

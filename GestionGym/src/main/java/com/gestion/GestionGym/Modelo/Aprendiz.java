@@ -1,10 +1,8 @@
 package com.gestion.GestionGym.Modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "aprendiz")
@@ -30,8 +28,8 @@ public class Aprendiz {
     @Column(name = "genero")
     private String genero;
 
-    @Column(name = "objetivo")
-    private String objetivo;
+    @Column(name = "objetivo_entrenamiento")
+    private String objetivoEntrenamiento;
 
     @Column(name = "nivel_condicion")
     private String nivelCondicion;
@@ -40,24 +38,19 @@ public class Aprendiz {
     @JoinColumn(name = "entrenador_id")
     private Entrenador entrenador;
 
-    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<ActividadEntrenamiento> actividadEntrenamientos;
-
     public Aprendiz() {
     }
 
-    public Aprendiz(Long id, String nombreCompleto, String correoElectronico, String contrasenia, LocalDate fechaNacimiento, String genero, String objetivo, String nivelCondicion, Entrenador entrenador, List<ActividadEntrenamiento> actividadEntrenamientos) {
+    public Aprendiz(Long id, String nombreCompleto, String correoElectronico, String contrasenia, LocalDate fechaNacimiento, String genero, String objetivoEntrenamiento, String nivelCondicion, Entrenador entrenador) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.correoElectronico = correoElectronico;
         this.contrasenia = contrasenia;
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
-        this.objetivo = objetivo;
+        this.objetivoEntrenamiento = objetivoEntrenamiento;
         this.nivelCondicion = nivelCondicion;
         this.entrenador = entrenador;
-        this.actividadEntrenamientos = actividadEntrenamientos;
     }
 
     public Long getId() {
@@ -100,20 +93,20 @@ public class Aprendiz {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getObjetivoEntrenamiento() {
+        return objetivoEntrenamiento;
+    }
+
+    public void setObjetivoEntrenamiento(String objetivoEntrenamiento) {
+        this.objetivoEntrenamiento = objetivoEntrenamiento;
+    }
+
     public String getGenero() {
         return genero;
     }
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-
-    public String getObjetivo() {
-        return objetivo;
-    }
-
-    public void setObjetivo(String objetivo) {
-        this.objetivo = objetivo;
     }
 
     public String getNivelCondicion() {
@@ -130,13 +123,5 @@ public class Aprendiz {
 
     public void setEntrenador(Entrenador entrenador) {
         this.entrenador = entrenador;
-    }
-
-    public List<ActividadEntrenamiento> getActividadEntrenamientos() {
-        return actividadEntrenamientos;
-    }
-
-    public void setActividadEntrenamientos(List<ActividadEntrenamiento> actividadEntrenamientos) {
-        this.actividadEntrenamientos = actividadEntrenamientos;
     }
 }
