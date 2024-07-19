@@ -42,6 +42,11 @@ public class Entrenador {
     public Entrenador() {
     }
 
+    public Entrenador(Long id, String correoElectronico) {
+        this.id = id;
+        this.correoElectronico = correoElectronico;
+    }
+
     public Entrenador(Long id, String nombreCompleto, String contrasenia, String correoElectronico, String especialidad, String experiencia, Set<String> certificaciones, List<Aprendiz> aprendices) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;

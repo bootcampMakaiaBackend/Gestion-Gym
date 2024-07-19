@@ -37,16 +37,17 @@ public class EntrenadorServicio {
         entrenadorRepositorio.save(entrenador);
     }
 
-    public void actualizarEntrenador(Long id, Entrenador entrenador) {
+    public Entrenador actualizarEntrenador(Long id, Entrenador actualizar) {
         Entrenador entrenadorActualizar = entrenadorRepositorio.findById(id).orElseThrow(() -> new EntrenadorNoEncontradoExcepcion(id));
 
-        entrenadorActualizar.setNombreCompleto(entrenador.getNombreCompleto());
-        entrenadorActualizar.setCorreoElectronico(entrenador.getCorreoElectronico());
-        entrenadorActualizar.setEspecialidad(entrenador.getEspecialidad());
-        entrenadorActualizar.setExperiencia(entrenador.getExperiencia());
-        entrenadorActualizar.setCertificaciones(entrenador.getCertificaciones());
+        entrenadorActualizar.setNombreCompleto(actualizar.getNombreCompleto());
+        entrenadorActualizar.setCorreoElectronico(actualizar.getCorreoElectronico());
+        entrenadorActualizar.setEspecialidad(actualizar.getEspecialidad());
+        entrenadorActualizar.setExperiencia(actualizar.getExperiencia());
+        entrenadorActualizar.setCertificaciones(actualizar.getCertificaciones());
 
         entrenadorRepositorio.save(entrenadorActualizar);
+        return entrenadorActualizar;
     }
 
     public List<Entrenador> obtenerEntrenadores() {
