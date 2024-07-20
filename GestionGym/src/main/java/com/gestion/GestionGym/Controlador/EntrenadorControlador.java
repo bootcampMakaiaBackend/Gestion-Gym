@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/entrenador")
+@RequestMapping("api/entrenador")
 public class EntrenadorControlador {
 
     private final EntrenadorServicio entrenadorServicio;
@@ -31,6 +31,8 @@ public class EntrenadorControlador {
             return ResponseEntity.ok("Se creó el entrenador correctamente");
         } catch (EntrenadorExistenteExcepcion | InformacionIncompletaExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error inesperado.");
         }
     }
 

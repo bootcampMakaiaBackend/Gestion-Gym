@@ -37,7 +37,7 @@ public class EntrenadorServicio {
         entrenadorRepositorio.save(entrenador);
     }
 
-    public Entrenador actualizarEntrenador(Long id, Entrenador actualizar) {
+    public void actualizarEntrenador(Long id, Entrenador actualizar) {
         Entrenador entrenadorActualizar = entrenadorRepositorio.findById(id).orElseThrow(() -> new EntrenadorNoEncontradoExcepcion(id));
 
         entrenadorActualizar.setNombreCompleto(actualizar.getNombreCompleto());
@@ -47,7 +47,6 @@ public class EntrenadorServicio {
         entrenadorActualizar.setCertificaciones(actualizar.getCertificaciones());
 
         entrenadorRepositorio.save(entrenadorActualizar);
-        return entrenadorActualizar;
     }
 
     public List<Entrenador> obtenerEntrenadores() {

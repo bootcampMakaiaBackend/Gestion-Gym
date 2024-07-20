@@ -2,7 +2,6 @@ package com.gestion.GestionGym.Controlador;
 
 import com.gestion.GestionGym.Excepciones.*;
 import com.gestion.GestionGym.Modelo.Aprendiz;
-import com.gestion.GestionGym.Modelo.Entrenador;
 import com.gestion.GestionGym.Servicio.AprendizServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/aprendiz")
+@RequestMapping("api/aprendiz")
 public class AprendizControlador {
 
     private final AprendizServicio aprendizServicio;
@@ -34,6 +33,8 @@ public class AprendizControlador {
             return ResponseEntity.ok("Se creó el aprendiz correctamente");
         } catch (EntrenadorNoEncontradoExcepcion | AprendizExistenteExcepcion | InformacionIncompletaExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error inesperado.");
         }
     }
 
@@ -52,7 +53,7 @@ public class AprendizControlador {
         try {
             List<Aprendiz> aprendices = this.aprendizServicio.obtenerAprendices();
             return ResponseEntity.ok(aprendices);
-        }catch (AprendizNoExistenteExcepcion e){
+        } catch (AprendizNoExistenteExcepcion e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
@@ -62,7 +63,7 @@ public class AprendizControlador {
         try {
             Aprendiz aprendiz = this.aprendizServicio.obtenerAprendizPorId(id);
             return ResponseEntity.ok(aprendiz);
-        }catch (AprendizNoEncontradoExcepcion e){
+        } catch (AprendizNoEncontradoExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -72,7 +73,7 @@ public class AprendizControlador {
         try {
             this.aprendizServicio.eliminarAprendiz(id);
             return ResponseEntity.ok("Se elimino el aprendiz correctamente");
-        }catch (AprendizNoExistenteExcepcion e){
+        } catch (AprendizNoExistenteExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
