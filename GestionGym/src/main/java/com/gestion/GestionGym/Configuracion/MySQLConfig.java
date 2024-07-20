@@ -1,6 +1,6 @@
 package com.gestion.GestionGym.Configuracion;
 
-import javax.sql.DataSource;
+/*import javax.sql.DataSource;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,4 +47,4 @@ public class MySQLConfig {
             @Qualifier("mysqlEntityManager") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
-}
+}*/

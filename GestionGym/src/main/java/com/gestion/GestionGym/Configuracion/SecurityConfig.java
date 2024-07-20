@@ -32,10 +32,13 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
+        String encodedPassword = "$2a$10$HVL6PmGu4umZdQAJQwrhaulaWP1zNWJdUj4hJJ2.q6jaTzdRqKPVi";
+
         UserDetails user = User.withUsername("root")
-                .password("2424")
+                .password(encodedPassword)
                 .roles("USER")
                 .build();
+
         return new InMemoryUserDetailsManager(user);
     }
 
