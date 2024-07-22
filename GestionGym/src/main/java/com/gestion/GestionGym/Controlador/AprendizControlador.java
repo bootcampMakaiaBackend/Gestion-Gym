@@ -50,12 +50,8 @@ public class AprendizControlador {
 
     @GetMapping
     public ResponseEntity<List<Aprendiz>> obtenerAprendices() {
-        try {
-            List<Aprendiz> aprendices = this.aprendizServicio.obtenerAprendices();
-            return ResponseEntity.ok(aprendices);
-        } catch (AprendizNoExistenteExcepcion e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        List<Aprendiz> aprendices = this.aprendizServicio.obtenerAprendices();
+        return ResponseEntity.ok(aprendices);
     }
 
     @GetMapping("/{id}")

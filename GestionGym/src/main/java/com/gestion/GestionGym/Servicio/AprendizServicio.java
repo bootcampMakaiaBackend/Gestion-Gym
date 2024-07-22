@@ -2,14 +2,12 @@ package com.gestion.GestionGym.Servicio;
 
 import com.gestion.GestionGym.Excepciones.*;
 import com.gestion.GestionGym.Modelo.Aprendiz;
-import com.gestion.GestionGym.Modelo.Entrenador;
 import com.gestion.GestionGym.Repositorio.AprendizRepositorio;
 import com.gestion.GestionGym.Repositorio.EntrenadorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AprendizServicio {
@@ -24,7 +22,6 @@ public class AprendizServicio {
     }
 
     public void crearAprendiz(Aprendiz aprendiz, Long entrenadorId) {
-        Optional<Entrenador> entrenador = entrenadorRepositorio.findById(entrenadorId);
         if (!entrenadorRepositorio.existsById(entrenadorId)) {
             throw new EntrenadorNoEncontradoExcepcion(entrenadorId);
         }
@@ -42,7 +39,7 @@ public class AprendizServicio {
             throw new InformacionIncompletaExcepcion();
         }
 
-        aprendiz.setEntrenador(entrenadorRepositorio.findById(entrenadorId).orElseThrow(()-> new EntrenadorNoEncontradoExcepcion(entrenadorId)));
+        aprendiz.setEntrenador(entrenadorRepositorio.findById(entrenadorId).orElseThrow(() -> new EntrenadorNoEncontradoExcepcion(entrenadorId)));
         aprendizRepositorio.save(aprendiz);
     }
 
@@ -61,9 +58,6 @@ public class AprendizServicio {
     }
 
     public List<Aprendiz> obtenerAprendices() {
-        if (aprendizRepositorio == null){
-            throw new AprendizNoExistenteExcepcion();
-        }
         return aprendizRepositorio.findAll();
     }
 
@@ -72,9 +66,9 @@ public class AprendizServicio {
     }
 
     public void eliminarAprendiz(Long id) {
-        if (aprendizRepositorio.existsById(id)){
+        if (aprendizRepositorio.existsById(id)) {
             aprendizRepositorio.deleteById(id);
-        }else {
+        } else {
             throw new AprendizNoEncontradoExcepcion(id);
         }
     }

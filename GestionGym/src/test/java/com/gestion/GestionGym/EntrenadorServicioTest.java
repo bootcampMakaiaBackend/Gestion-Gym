@@ -1,6 +1,5 @@
 package com.gestion.GestionGym;
 
-
 import com.gestion.GestionGym.Excepciones.EntrenadorNoEncontradoExcepcion;
 import com.gestion.GestionGym.Excepciones.InformacionIncompletaExcepcion;
 import com.gestion.GestionGym.Modelo.Entrenador;
@@ -9,7 +8,6 @@ import com.gestion.GestionGym.Servicio.EntrenadorServicio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class EntrenadorServicioTest {
-
 
     private EntrenadorRepositorio entrenadorRepositorio;
     private EntrenadorServicio entrenadorServicio;
@@ -31,13 +28,14 @@ public class EntrenadorServicioTest {
 
     @Test
     public void CrearEntrenadorIncompleto() {
-
+        //Arrange
         Entrenador entrenador1 = new Entrenador();
         entrenador1.setId(1L);
         entrenador1.setCorreoElectronico("omar@gmail.com");
 
+        //Act & Assert
         assertThrows(InformacionIncompletaExcepcion.class, () -> entrenadorServicio.crearEntrenador(entrenador1));
-        verify(entrenadorRepositorio, times(1));
+        verify(entrenadorRepositorio, never()).save(any(Entrenador.class));
     }
 
 
@@ -45,17 +43,13 @@ public class EntrenadorServicioTest {
     public void ActualizarEntrenador() {
 
         //Arrange
-
         Long id = 1L;
-
         Entrenador entrenador1 = new Entrenador();
-
         entrenador1.setId(id);
         entrenador1.setNombreCompleto("Omar Bonett");
 
         Entrenador actualizar = new Entrenador();
-
-        actualizar.setNombreCompleto("luis Bautista");
+        actualizar.setNombreCompleto("Luis Bautista");
 
         when(entrenadorRepositorio.findById(id)).thenReturn(Optional.of(entrenador1));
         when(entrenadorRepositorio.save(any(Entrenador.class))).thenReturn(entrenador1);
@@ -64,7 +58,7 @@ public class EntrenadorServicioTest {
         Entrenador resultado = entrenadorServicio.actualizarEntrenador(id, actualizar);
 
         //Assert
-        assertEquals("luis Bautista", resultado.getNombreCompleto());
+        assertEquals("Luis Bautista", resultado.getNombreCompleto());
         verify(entrenadorRepositorio, times(1)).save(entrenador1);
 
     }
@@ -80,19 +74,18 @@ public class EntrenadorServicioTest {
         entrenador2.setId(2L);
         entrenador2.setCorreoElectronico("luis@gmail.com");
 
-        List<Entrenador> entrenador = new ArrayList<>();
-        entrenador.add(entrenador1);
-        entrenador.add(entrenador2);
+        List<Entrenador> entrenadores = Arrays.asList(entrenador1, entrenador2);
 
-        when(entrenadorRepositorio.findAll()).thenReturn(entrenador);
+        when(entrenadorRepositorio.findAll()).thenReturn(entrenadores);
 
         // Act
         List<Entrenador> resultado = entrenadorServicio.obtenerEntrenadores();
 
         // Assert
         assertEquals(2, resultado.size(), "El tamaño de la lista debería ser 2");
-        assertEquals("omar@gmail.com", resultado.get(0).getCorreoElectronico(), "El primer correo entrenador debería ser omar");
-        assertEquals("luis@gmail.com", resultado.get(1).getCorreoElectronico(), "El segundo correo entrenador debería ser luis");
+        assertEquals("omar@gmail.com", resultado.get(0).getCorreoElectronico(), "El primer correo del entrenador1 debería ser omar@gmail.com");
+        assertEquals("luis@gmail.com", resultado.get(1).getCorreoElectronico(), "El segundo correo entrenador debería ser luis@gmail.com");
+        verify(entrenadorRepositorio, times(1)).findAll();
     }
 
     @Test
@@ -110,8 +103,6 @@ public class EntrenadorServicioTest {
     public void eliminarEntrenador() {
         //Arrange
         Long id = 1L;
-        Entrenador entrenador = new Entrenador();
-        entrenador.setId(id);
         when(entrenadorRepositorio.existsById(id)).thenReturn(true);
 
         //Act
