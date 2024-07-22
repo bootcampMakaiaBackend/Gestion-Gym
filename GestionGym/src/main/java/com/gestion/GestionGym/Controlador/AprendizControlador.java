@@ -25,12 +25,12 @@ public class AprendizControlador {
     public ResponseEntity<String> crearAprendiz(@RequestBody Aprendiz aprendiz) {
         try {
             if (aprendiz.getEntrenador() == null || aprendiz.getEntrenador().getId() == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del entrenador es requerido");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del entrenador es requerido.");
             }
 
             Long entrenadorId = aprendiz.getEntrenador().getId();
             this.aprendizServicio.crearAprendiz(aprendiz, entrenadorId);
-            return ResponseEntity.ok("Se creó el aprendiz correctamente");
+            return ResponseEntity.ok("Se creó el aprendiz correctamente.");
         } catch (EntrenadorNoEncontradoExcepcion | AprendizExistenteExcepcion | InformacionIncompletaExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class AprendizControlador {
     public ResponseEntity<String> actualizarAprendiz(@PathVariable Long id, @RequestBody Aprendiz aprendiz) {
         try {
             aprendizServicio.actualizarAprendiz(id, aprendiz);
-            return ResponseEntity.ok("Se actualizó el aprendiz correctamente");
+            return ResponseEntity.ok("Se actualizó el aprendiz correctamente.");
         } catch (AprendizNoEncontradoExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -59,12 +59,12 @@ public class AprendizControlador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Aprendiz> obtenerAprendizPorId(@PathVariable Long id) {
+    public ResponseEntity<?> obtenerAprendizPorId(@PathVariable Long id) {
         try {
             Aprendiz aprendiz = this.aprendizServicio.obtenerAprendizPorId(id);
             return ResponseEntity.ok(aprendiz);
         } catch (AprendizNoEncontradoExcepcion e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class AprendizControlador {
     public ResponseEntity<String> eliminarAprendiz(@PathVariable Long id) {
         try {
             this.aprendizServicio.eliminarAprendiz(id);
-            return ResponseEntity.ok("Se elimino el aprendiz correctamente");
+            return ResponseEntity.ok("Se eliminó el aprendiz correctamente.");
         } catch (AprendizNoExistenteExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

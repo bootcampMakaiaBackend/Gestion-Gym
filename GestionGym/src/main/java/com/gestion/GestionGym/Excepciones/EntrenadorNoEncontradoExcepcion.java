@@ -1,7 +1,7 @@
 package com.gestion.GestionGym.Excepciones;
 
 public class EntrenadorNoEncontradoExcepcion extends RuntimeException{
-    public EntrenadorNoEncontradoExcepcion(Long id) {
-        super("Entrenador con id " + id + " no encontrado");
+    public EntrenadorNoEncontradoExcepcion(Long entrenadorId) {
+        super("El entrenador con id " + entrenadorId + " no se encuentra registrado.");
     }
 }

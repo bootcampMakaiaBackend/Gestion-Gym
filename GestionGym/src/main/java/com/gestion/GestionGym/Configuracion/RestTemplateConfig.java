@@ -11,7 +11,7 @@ import java.io.IOException;
 @Configuration
 public class RestTemplateConfig {
     @Bean
-    public RestTemplate restTemplate(){
+    public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new ResponseErrorHandler() {
             @Override

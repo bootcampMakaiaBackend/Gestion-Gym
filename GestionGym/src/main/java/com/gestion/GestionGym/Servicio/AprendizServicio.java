@@ -25,7 +25,7 @@ public class AprendizServicio {
 
     public void crearAprendiz(Aprendiz aprendiz, Long entrenadorId) {
         Optional<Entrenador> entrenador = entrenadorRepositorio.findById(entrenadorId);
-        if (entrenador.isEmpty()) {
+        if (!entrenadorRepositorio.existsById(entrenadorId)) {
             throw new EntrenadorNoEncontradoExcepcion(entrenadorId);
         }
 
@@ -42,7 +42,7 @@ public class AprendizServicio {
             throw new InformacionIncompletaExcepcion();
         }
 
-        aprendiz.setEntrenador(entrenador.get());
+        aprendiz.setEntrenador(entrenadorRepositorio.findById(entrenadorId).orElseThrow(()-> new EntrenadorNoEncontradoExcepcion(entrenadorId)));
         aprendizRepositorio.save(aprendiz);
     }
 

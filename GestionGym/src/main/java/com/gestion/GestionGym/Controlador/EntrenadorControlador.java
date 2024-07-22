@@ -41,7 +41,7 @@ public class EntrenadorControlador {
     public ResponseEntity<String> actualizarEntrenador(@PathVariable("id") Long id, @RequestBody Entrenador entrenador) {
         try {
             this.entrenadorServicio.actualizarEntrenador(id, entrenador);
-            return ResponseEntity.ok("Se actualizó el entrenador correctamente");
+            return ResponseEntity.ok("Se actualizó el entrenador correctamente.");
         } catch (EntrenadorNoEncontradoExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -71,7 +71,7 @@ public class EntrenadorControlador {
     public ResponseEntity<String> eliminarEntrenador(@PathVariable Long id) {
         try {
             this.entrenadorServicio.eliminarEntrenador(id);
-            return ResponseEntity.ok("Se eliminó el entrenador correctamente");
+            return ResponseEntity.ok("Se eliminó el entrenador correctamente.");
         } catch (EntrenadorNoExistenteExcepcion e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
