@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -52,15 +51,16 @@ jobs:
             sleep 10
           done
 
-      - name: Check MySQL Logs
-        if: failure()
-        run: docker logs mysql
+      - name: List Docker containers
+        run: docker ps -a
+
+      - name: Check MySQL Container Logs
+        run: docker logs $(docker ps -q -f ancestor=mysql:8.0)
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
   dependency-submission:
-
     runs-on: ubuntu-latest
     permissions:
       contents: write
